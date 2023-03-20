@@ -1,0 +1,13 @@
+@mixin flexbox($justify, $align){
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+@mixin background-img-fix($position){
+    background: {
+        size: cover;
+        repeat: no-repeat;
+        position: $position;
+    };
+}

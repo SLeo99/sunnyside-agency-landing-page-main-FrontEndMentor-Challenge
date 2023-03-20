@@ -1,0 +1,200 @@
+@use 'variables';
+@use 'mixinsFunc';
+
+.main {
+    display: grid;
+    grid-template-areas: 
+    "grid1 grid2"
+    "grid3 grid4"
+    "grid5 grid6";
+    grid-auto-columns: 1fr;
+    grid-auto-rows: 1fr;
+}
+
+.grid {
+    // position: relative;
+
+    //SET GRID AREA 1/6
+    @for $i from 1 through 6 {
+        .grid#{$i}{
+            grid-area: grid#{$i};
+        }
+    }
+
+    &--1, &--4 {
+        @include mixinsFunc.flexbox(center, initial);
+        flex-direction: column;
+        width: min(100%, 25rem);
+        margin-inline: auto;
+    }
+
+    &2 > img, &3 > img {
+        height: 100% !important;
+        width: 100%;
+    }
+
+    &__content {
+        @include mixinsFunc.flexbox(center, flex-start);
+        flex-direction: column;
+        gap: 3rem;
+
+        & > h2 {
+            color: variables.$Verydarkdesaturatedblue;
+            font-family: variables.$fontFraunces;
+            font-weight: variables.$fraunces900;
+            font-size: variables.$gridDesktopFont;
+        }
+
+        & > p {
+            font-family: variables.$fontBarlow;
+            color: variables.$Verydarkgrayishblue;
+            font-weight: variables.$barlow600;
+            font-size: variables.$px18;
+        }
+    }
+
+    .grid__link{
+        text-decoration: none;
+        font-family: variables.$fontFraunces;
+        text-transform: uppercase;
+        color: variables.$Verydarkdesaturatedblue;
+        position: relative;
+        z-index: 2;
+
+        &::after {
+            content: '';
+            width: calc(100% + .5rem);
+            min-height: .4rem;
+            background-color: variables.$Yellow;
+            position: absolute;
+            left: calc(0% - .25rem);
+            bottom: calc(0% + .2rem);
+            border-radius: .5625rem;
+            opacity: .5;
+            z-index: -1;
+        }
+
+        &--yellow:hover::after {
+            opacity: .9;
+            transition: .25s ease-in-out;
+        }
+
+        &--red::after {
+            background-color: variables.$Softred;
+        }
+
+        &--red:hover::after {
+            opacity: .9;
+            transition: .25s ease-in-out;
+        }
+    }
+
+    &5 {
+        background-image: url(../images/mobile/image-graphic-design.jpg) !important;
+        @include mixinsFunc.background-img-fix(center);
+    }
+
+    &6 {
+        background-image: url(../images/mobile/image-photography.jpg);
+        @include mixinsFunc.background-img-fix(center);
+    }
+
+    &5, &6 {
+        position: relative;
+        display: flex;
+        justify-content: center;
+    }
+
+    &__bottom {
+        width: min(100%, 25rem);
+        margin: 0 auto 4rem;
+        text-align: center;
+        position: absolute;
+        bottom: 0;
+        @include mixinsFunc.flexbox(center, center);
+        flex-direction: column;
+        gap: 1.5rem;
+
+        & > h2 {
+            font-family: variables.$fontFraunces;
+            font-weight: variables.$fraunces900;
+            font-size: 2rem;
+        }
+
+        & > p {
+            font-family: variables.$fontBarlow;
+            font-size: variables.$px18;
+        }
+
+        &--graphicd {
+            color: variables.$graphicDesignText;
+        }
+
+        &--photography {
+            color: variables.$photographyText;
+        }
+    }
+}
+
+@media screen and (max-width: 1023px){
+    .grid {
+
+        &__bottom {
+            margin-bottom: 2rem;
+        }
+
+        &__content {
+            width: calc(100% - 4rem) !important;
+            margin: 1.75rem auto;
+
+            & > h2 {
+                font-size: variables.$gridTabletFont;
+            }
+        }
+
+        &--1, &--4 {
+            width: 100% !important;
+            margin-inline: 0;
+        }
+
+        &5 {
+            background-image: url(../images/desktop/image-graphic-design.jpg) !important;
+        }
+    
+        &6 {
+            background-image: url(../images/desktop/image-photography.jpg);
+        }
+    }
+}
+
+@media screen and (max-width: 767px){
+    .main {
+        grid-template-areas: 
+        "grid2" 
+        "grid1"
+        "grid3"
+        "grid4"
+        "grid5"
+        "grid5"
+        'grid6'
+        'grid6' !important;
+    }
+
+    @for $i from 1 through 6 {
+        .grid#{$i}{
+            grid-area: grid#{$i};
+        }
+    }
+
+    .grid__content {
+        text-align: center;
+        align-items: center;
+        width: calc(100% - 2.5rem) !important;
+    }
+
+    .grid__bottom {
+        top: 50%;
+        width: calc(100% - 2.5rem);
+        margin-bottom: 0;
+    }
+}
